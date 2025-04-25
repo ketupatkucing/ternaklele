@@ -1,20 +1,23 @@
+
 {
   "name": "E-Ternak Lele",
   "short_name": "E-TLELE",
-  "start_url": "/",
+  "start_url": "/ternaklele/",
+  "scope": "/ternaklele/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#317EFB",
+  "background_color": "#fde494",
+  "theme_color": "#ffc75a",
   "icons": [
     {
-      "src": "pancing.png",
+      "src": "/ternaklele/pancing.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "strike.png",
+      "src": "/ternaklele/strike.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
+
