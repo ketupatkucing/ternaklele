@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+
+  <title>E-TLE (E-Ternak Lele)</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto;
+      background-color: #87CEEB;
+      overflow: hidden;
+      width: 400px;
+
+    }
+    button:active {
+      transform: scale(0.9)
+    }
+
+    .fishing-container {
+      position: relative;
+      width: 400px;
+      height: 300px;
+
+      z-index: 0;
+
+    }
+
+
+    .line {
+      position: relative;
+      width: 2px;
+      background-color: white;
+      transform-origin: top center;
+      left: 350px;
+      bottom: 230px;
+
+      z-index: 0
+    }
+
+    #castButton {
+
+      height: 150px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      /* Safari */
+      -ms-user-select: none;
+      /* IE 10 and IE 11 */
+      user-select: none;
+      /* Standard syntax */
+
+
+    }
+
+    #castButtonPlaceholder {
+      display: none;
+      height: 150px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      /* Safari */
+      -ms-user-select: none;
+      /* IE 10 and IE 11 */
+      user-select: none;
+      /* Standard syntax */
+      position: relative;
+      z-index: -1
+    }
+
+    #castButton img,
+    #castButtonPlaceholder img {
+      width: 100px;
+      height: 100px
+    }
+
+    .human img {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      top: 0px;
+      left: 150px;
+      transform-origin: center center;
+      z-index: 1;
+      transition: transform 0.5s ease;
+
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, #00f, #006);
+
+
+    }
+
+    .pond {
+      width: 400px;
+      height: 400px;
+      margin-bottom: -40px;
+      border-bottom: solid saddlebrown 30px;
+
+
+    }
+
+
+    .aksi {
+      display: flex;
+      width: 390px;
+      justify-content: center;
+      gap: 0px;
+      border: solid green 2px;
+      margin-top: 40px;
+
+    }
+
+    .dompet-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .dompet-container img {
+      width: 30px;
+      height: 30px;
+
+    }
+
+    .mid {
+      width: 120px;
+    }
+
+    .left,
+    .right {
+
+      width: 130px;
+
+
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px
+    }
+
+    .fishfood {
+      display: flex;
+
+      align-items: center
+    }
+
+   
+
+    #energy-container {
+      width: 300px;
+      height: 30px;
+      background: #333;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+      transition: transform 0.1s ease;
+      position: relative;
+      top: -490px;
+      left: 0px;
+    }
+
+    #energy-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to right, #00ff88, #00ccff);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    .shake {
+      animation: shake 0.3s infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-3px);
+      }
+
+      50% {
+        transform: translateX(3px);
+      }
+
+      75% {
+        transform: translateX(-3px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+    .button {
+      min-width: 50px;
+      background-color: #ffffeb;
+      color: saddlebrown;
+      border-radius: 10px;
+      
+      border-left: none;
+      border-right: none;
+      border-top: solid 4px #ffffec;
+      border-bottom: solid 3px #efccb1;
+      outline: solid 2px saddlebrown;
+       -webkit-user-select: none;
+       /* Safari */
+       -ms-user-select: none;
+       /* IE 10 and IE 11 */
+       user-select: none;
+       /* Standard syntax */
+    
+    }
+    
+    .confirm {
+      font-size: 1.5rem;
+      font-weight: bold;
+      min-width: 50px;
+      background-color: #aad335;
+      color: white;
+      border-radius: 10px;
+      
+      border-left: none;
+      border-right: none;
+      border-top: solid 1px #b9e15f;
+      border-bottom: solid 3px #8eb712;
+      outline: solid 2px #41840f;
+       -webkit-user-select: none;
+       /* Safari */
+       -ms-user-select: none;
+       /* IE 10 and IE 11 */
+       user-select: none;
+       /* Standard syntax */
+    
+    }
+    
+    .reject {
+      font-size: 1rem;
+      font-weight: bold;
+      min-width: 100px;
+      background-color: #f75e61;
+      color: white;
+      border-radius: 10px;
+
+      border-left: none;
+      border-right: none;
+      border-top: solid 1px #fd7776;
+      border-bottom: solid 3px #e24a53;
+      outline: solid 2px #a94948;
+       -webkit-user-select: none;
+       /* Safari */
+       -ms-user-select: none;
+       /* IE 10 and IE 11 */
+       user-select: none;
+       /* Standard syntax */
+    
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pond">
+    <canvas id="fishCanvas"></canvas>
+  </div>
+  <div class="human">
+    <img sizes="orang.png" srcset="orang.png" src="orang.png" alt="orang.png" id="human">
+  </div>
+
+
+
+
+
+
+
+  <div class="aksi">
+    <div class="left">
+      <div class="dompet-container">
+
+        <img src="coin.png" alt="coin.png">
+        <p class="dompet"></p>
+      </div>
+      <div class="total"></div>
+
+    </div>
+    <div class="mid">
+      <button class="confirm" id="castButton">
+Lempar
+      </button>
+      <button class="confirm" id="castButtonPlaceholder">.....</button>
+    </div>
+    <div class="right">
+
+      <div class="menu">
+        <div class="fishfood">
+          <input id="pembibitan" type="checkbox" name="check" onclick="onlyOne(this)">
+          <label for="pembibitan"><img src="talas.png" alt="talas.png" style="width : 35px; height: 35px"></label>
+          <small> : Rp.2000</small>
+        </div>
+        <div class="fishfood">
+          <input id="pembesaran" type="checkbox" name="check" onclick="onlyOne(this)"><label for="pembesaran"><img src="makananpelet.png" style="width : 30px; height: 20p" alt="makanan"></label>
+          <small> : Rp.1000</small>
+        </div>
+
+
+      </div>
+      <button class="button" onclick="beliIkan()">Beli Bibit Ikan</button>
+      <button class="reject" onclick="ulang()">Ulang</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="fishing-container">
+    <div class="line" id="line"></div>
+  </div>
+  <div id="energy-container">
+    <div id="energy-bar"></div>
+  </div>
+  <audio id="myAudio">
+    <source src="strike.m4a" type="audio/mpeg">
+  </audio>
+  <script src="energy.js"></script>
+  <script src="mancing.js"></script>
+  <script src="fish.js"></script>
+  <script>if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+</body>
+
+</html>
