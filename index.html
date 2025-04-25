@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/ternaklele/manifest.json">
 
   <title>E-TLE (E-Ternak Lele)</title>
   <style>
@@ -14,7 +14,7 @@
       flex-direction: column;
       align-items: center;
       margin: 0 auto;
-      background-color: #87CEEB;
+      background-color:#fde494 ;
       overflow: hidden;
       width: 400px;
 
@@ -353,11 +353,27 @@ Lempar
   <script src="energy.js"></script>
   <script src="mancing.js"></script>
   <script src="fish.js"></script>
-  <script>if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js');
-  });
-}
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/ternaklele/sw.js').then((reg) => {
+        console.log('Service Worker registered:', reg);
+
+        reg.onupdatefound = () => {
+          const newWorker = reg.installing;
+          newWorker.onstatechange = () => {
+            if (
+              newWorker.state === 'installed' &&
+              navigator.serviceWorker.controller
+            ) {
+              const shouldReload = confirm("New version available. Refresh now?");
+              if (shouldReload) window.location.reload();
+            }
+          };
+        };
+      });
+    });
+  }
 </script>
 </body>
 
